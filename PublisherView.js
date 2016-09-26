@@ -67,6 +67,8 @@ class PublisherView extends React.Component {
     onClientDisconnected: React.PropTypes.func,
   };
 
+
+  
   static defaultProps = {
     onPublishStart: noop,
     onPublishError: noop,
@@ -81,5 +83,4 @@ class PublisherView extends React.Component {
 }
 
 const RCTPublisherView = requireNativeComponent('RCTOpenTokPublisherView', PublisherView);
-
 export default withLoadingSpinner(PublisherView, 'onPublishStart');
