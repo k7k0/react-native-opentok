@@ -21,9 +21,6 @@
     OTPublisher *_publisher;
 }
 
-- (void)sayHello{
-    NSLog(@"hello world");
-}
 /**
  * Mounts component after all props were passed
  */
@@ -67,7 +64,7 @@
    _publisher.publishAudio = YES;
    _publisher.publishVideo = YES;
    _publisher.audioFallbackEnabled = YES;
-    
+
     OTError *error = nil;
 
     [_session publish:_publisher error:&error];
@@ -77,7 +74,33 @@
         return;
     }
 
-    [self attachPublisherView];
+   [self attachPublisherView];
+}
+
+- (void)pausePublish{
+    NSLog(@"pausePublish");
+    OTError* error = nil;
+    [_session unpublish:_publisher error:&error];
+    if (error) {
+        NSLog(@"publishing failed with error: (%@)", error);
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self cleanupPublisher];
+    });
+    //    pub.once('streamDestroyed', function (event) {
+    //        event.preventDefault();
+    //        console.log('The publisher stopped streaming.');
+    //    });
+    //
+    //    _session.unpublish(pub);
+}
+- (void)resumePublish{
+    NSLog(@"resumePublish");
+    // for web we could preserve the publisher, but it doesnt seem to work here.
+    // So we need to recreate the publisher
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self startPublishing];
+    });
 }
 
 /**

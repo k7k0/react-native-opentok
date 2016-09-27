@@ -78,8 +78,11 @@ class PublisherView extends React.Component {
     onClientDisconnected: noop,
   };
 
-  sayHello() {
-    OpenTokPublisherViewManager.sayHello();
+  pausePublish() {
+    OpenTokPublisherViewManager.pausePublish();
+  }
+  resumePublish() {
+    OpenTokPublisherViewManager.resumePublish();
   }
 
   render() {

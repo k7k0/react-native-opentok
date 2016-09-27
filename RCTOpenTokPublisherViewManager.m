@@ -56,9 +56,13 @@ RCT_EXPORT_VIEW_PROPERTY(onClientConnected, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onClientDisconnected, RCTDirectEventBlock)
 
 
-RCT_EXPORT_METHOD(sayHello)
+RCT_EXPORT_METHOD(resumePublish)
 {
-    [_recorderView sayHello];
+    [_recorderView resumePublish];
+}
+RCT_EXPORT_METHOD(pausePublish)
+{
+    [_recorderView pausePublish];
 }
 
 @end

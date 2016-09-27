@@ -18,7 +18,9 @@
 @property (nonatomic, assign) NSInteger cameraResolution;
 @property (nonatomic, assign) NSInteger cameraFrameRate;
 
-- (void)sayHello;
+- (void)pausePublish;
+
+- (void)resumePublish;
 
 @property (nonatomic, copy) RCTDirectEventBlock onPublishError;
 @property (nonatomic, copy) RCTDirectEventBlock onPublishStop;
