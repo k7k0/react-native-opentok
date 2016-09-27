@@ -9,11 +9,36 @@
 #import "RCTOpenTokPublisherViewManager.h"
 #import "RCTOpenTokPublisherView.h"
 #import "RCTComponent.h"
+#import <OpenTok/OpenTok.h>
 
-@implementation RCTOpenTokPublisherViewManager
+@implementation RCTOpenTokPublisherViewManager {
+    RCTOpenTokPublisherView *_recorderView;
+}
 
-- (UIView *)view {
-    return [RCTOpenTokPublisherView new];
+- (UIView *)view
+{
+    // Alloc UI element
+    if (_recorderView == nil) {
+        _recorderView =  [RCTOpenTokPublisherView new];
+    }
+    return _recorderView;
+}
+
+- (NSDictionary *)constantsToExport
+{
+    return @{
+             @"CameraCaptureResolution": @{
+                     @"Low": @(OTCameraCaptureResolutionLow),
+                     @"Medium": @(OTCameraCaptureResolutionMedium),
+                     @"High": @(OTCameraCaptureResolutionHigh)
+                     },
+             @"CameraCaptureFrameRate": @{
+                     @"FR30FPS": @(OTCameraCaptureFrameRate30FPS),
+                     @"FR15FPS": @(OTCameraCaptureFrameRate15FPS),
+                     @"FR7FPS": @(OTCameraCaptureFrameRate7FPS),
+                     @"FR1FPS": @(OTCameraCaptureFrameRate1FPS),
+                },
+             };
 }
 
 RCT_EXPORT_MODULE()
@@ -21,11 +46,19 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_VIEW_PROPERTY(apiKey, NSString)
 RCT_EXPORT_VIEW_PROPERTY(sessionId, NSString)
 RCT_EXPORT_VIEW_PROPERTY(token, NSString)
+RCT_EXPORT_VIEW_PROPERTY(cameraResolution, NSInteger)
+RCT_EXPORT_VIEW_PROPERTY(cameraFrameRate, NSInteger)
 
 RCT_EXPORT_VIEW_PROPERTY(onPublishStart, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onPublishError, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onPublishStop, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onClientConnected, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onClientDisconnected, RCTDirectEventBlock)
+
+
+RCT_EXPORT_METHOD(sayHello)
+{
+    [_recorderView sayHello];
+}
 
 @end

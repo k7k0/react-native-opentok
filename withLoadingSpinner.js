@@ -9,6 +9,8 @@
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
+const childRef = 'ChildRef';
+
 const withLoadingSpinner = (Component, callbackName) => class SpinnerView extends React.Component {
   static propTypes = {
     /**
@@ -21,6 +23,10 @@ const withLoadingSpinner = (Component, callbackName) => class SpinnerView extend
   state = {
     renderSpinner: true,
   };
+	
+  getRef() {
+	  return this.refs[childRef];
+  }
 
   onRequestFulfilled = () => {
     if (typeof this.props[callbackName] === 'function') {
@@ -39,7 +45,7 @@ const withLoadingSpinner = (Component, callbackName) => class SpinnerView extend
 
     return (
       <View style={styles.container}>
-        <Component {...passProps} />
+        <Component {...passProps} ref={childRef}/>
         {this.state.renderSpinner && (
           <View style={[styles.spinnerContainer, this.props.spinnerContainerStyle]}>
             <ActivityIndicator
