@@ -6,10 +6,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent, View } from 'react-native';
+import { requireNativeComponent, View, NativeModules } from 'react-native';
 import React from 'react';
 import SessionViewProps from './SessionViewProps';
 import withLoadingSpinner from './withLoadingSpinner';
+
+const OpenTokPublisherViewManager = NativeModules.OpenTokPublisherViewManager;
 
 const noop = () => {};
 
@@ -68,7 +70,6 @@ class PublisherView extends React.Component {
   };
 
 
-  
   static defaultProps = {
     onPublishStart: noop,
     onPublishError: noop,
@@ -76,6 +77,10 @@ class PublisherView extends React.Component {
     onClientConnected: noop,
     onClientDisconnected: noop,
   };
+
+  sayHello() {
+    OpenTokPublisherViewManager.sayHello();
+  }
 
   render() {
     return <RCTPublisherView {...this.props} />;

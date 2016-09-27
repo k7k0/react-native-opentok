@@ -11,10 +11,17 @@
 #import "RCTComponent.h"
 #import <OpenTok/OpenTok.h>
 
-@implementation RCTOpenTokPublisherViewManager
+@implementation RCTOpenTokPublisherViewManager {
+    RCTOpenTokPublisherView *_recorderView;
+}
 
-- (UIView *)view {
-    return [RCTOpenTokPublisherView new];
+- (UIView *)view
+{
+    // Alloc UI element
+    if (_recorderView == nil) {
+        _recorderView =  [RCTOpenTokPublisherView new];
+    }
+    return _recorderView;
 }
 
 - (NSDictionary *)constantsToExport
@@ -47,5 +54,11 @@ RCT_EXPORT_VIEW_PROPERTY(onPublishError, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onPublishStop, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onClientConnected, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onClientDisconnected, RCTDirectEventBlock)
+
+
+RCT_EXPORT_METHOD(sayHello)
+{
+    [_recorderView sayHello];
+}
 
 @end

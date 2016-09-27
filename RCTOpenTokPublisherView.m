@@ -21,7 +21,7 @@
     OTPublisher *_publisher;
 }
 
-+ (void)sayHello{
+- (void)sayHello{
     NSLog(@"hello world");
 }
 /**
