@@ -29,4 +29,11 @@
 @property (nonatomic, copy) RCTDirectEventBlock onClientConnected;
 @property (nonatomic, copy) RCTDirectEventBlock onClientDisconnected;
 
+@property (nonatomic, copy) RCTDirectEventBlock onSessionDidConnect;
+@property (nonatomic, copy) RCTDirectEventBlock onSessionDidDisconnect;
+
+@property (nonatomic, copy) RCTDirectEventBlock onArchiveStarted;
+@property (nonatomic, copy) RCTDirectEventBlock onArchiveStopped;
+
+
 @end

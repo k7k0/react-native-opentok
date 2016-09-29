@@ -67,7 +67,55 @@ class PublisherView extends React.Component {
      * ```
      */
     onClientDisconnected: React.PropTypes.func,
-  };
+
+    /**
+     * This function is called when the connection is made to the server
+     * Not much use, mainly can be used as part of debugging process.
+     * Publishing will be initiated right away
+     *
+     * Receives payload:
+     * ```
+     * {
+     *   sessionId: string,
+     * }
+     * ```
+     */
+    onSessionDidConnect: React.PropTypes.func,
+    /**
+     * This function is called when we get disconnected from the session.
+     *
+     * Receives payload:
+     * ```
+     * {
+     *   sessionId: string,
+     * }
+     * ```
+     */
+    onSessionDidDisconnect: React.PropTypes.func,
+    /**
+     * This function is called when the session is being recorded
+     *
+     * Receives payload:
+     * ```
+     * {
+     *   archiveId: string,
+     *   name: string,
+     * }
+     * ```
+     */
+    onArchiveStarted: React.PropTypes.func,
+    /**
+     * This function is called when the session recording finishes
+     *
+     * Receives payload:
+     * ```
+     * {
+     *   archiveId: string,
+     * }
+     * ```
+     */
+    onArchiveStopped: React.PropTypes.func,
+};
 
 
   static defaultProps = {
@@ -76,6 +124,10 @@ class PublisherView extends React.Component {
     onPublishStop: noop,
     onClientConnected: noop,
     onClientDisconnected: noop,
+    onSessionDidConnect: noop,
+    onSessionDidDisconnect: noop,
+    onArchiveStarted: noop,
+    onArchiveStopped: noop,
   };
 
   pausePublish() {

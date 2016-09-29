@@ -87,12 +87,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self cleanupPublisher];
     });
-    //    pub.once('streamDestroyed', function (event) {
-    //        event.preventDefault();
-    //        console.log('The publisher stopped streaming.');
-    //    });
-    //
-    //    _session.unpublish(pub);
 }
 - (void)resumePublish{
     NSLog(@"resumePublish");
@@ -125,10 +119,17 @@
  * When session is created, we start publishing straight away
  */
 - (void)sessionDidConnect:(OTSession*)session {
+    _onSessionDidConnect(@{
+         @"sessionId": session.sessionId,
+    });
     [self startPublishing];
 }
 
-- (void)sessionDidDisconnect:(OTSession*)session {}
+- (void)sessionDidDisconnect:(OTSession*)session {
+    _onSessionDidDisconnect(@{
+        @"sessionId": session.sessionId,
+    });
+}
 
 /**
  * @todo multiple streams in a session are out of scope
@@ -164,6 +165,20 @@
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
     _onPublishError(RCTJSErrorFromNSError(error));
+}
+
+#pragma mark - OTSession delegate - archive callbacks
+- (void)session:(OTSession *)session archiveStartedWithId:(NSString *)archiveId name:(NSString *)name {
+    _onArchiveStarted(@{
+        @"archiveId": archiveId,
+        @"name": name,
+   });
+}
+
+- (void)session:(OTSession *)session archiveStoppedWithId:(NSString *)archiveId {
+    _onArchiveStopped(@{
+        @"archiveId": archiveId,
+    });
 }
 
 #pragma mark - OTPublisher delegate callbacks
