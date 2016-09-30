@@ -77,7 +77,8 @@
 
     [self attachPublisherView];
 
-    _publisher.videoCapture = [[OTKBasicVideoCapturer alloc] init];
+    _publisher.videoCapture = [[OTKBasicVideoCapturer alloc] initWithPreset:AVCaptureSessionPreset640x480
+                                                            andDesiredFrameRate:30];
 }
 
 - (void)pausePublish{
