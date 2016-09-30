@@ -51,7 +51,7 @@
 
     // Set device capture
     self.captureSession.sessionPreset = self.sessionPreset;
-    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDevice *videoDevice = [self frontCamera];
     self.inputDevice = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
     [self.captureSession addInput:self.inputDevice];
 
@@ -230,6 +230,17 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
     }
     return bestFrameRate;
+}
+
+- (AVCaptureDevice *)frontCamera
+{
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices) {
+        if ([device position] == AVCaptureDevicePositionFront) {
+            return device;
+        }
+    }
+    return nil;
 }
 
 @end
