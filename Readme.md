@@ -61,6 +61,10 @@ spinnerContainerStyle | object || number
 onPublishStart | function
 onPublishError | function
 onPublishStop | function
+onSessionDidConnect | function
+onSessionDidDisconnect | function
+onArchiveStarted | function
+onArchiveStopped | function
 ------------ | -------------
 onSubscribeStart | function
 onSubscribeError | function
