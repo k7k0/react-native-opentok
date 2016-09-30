@@ -8,6 +8,7 @@
 
 @import UIKit;
 #import "RCTOpenTokPublisherView.h"
+#import "OTKBasicVideoCapturer.h"
 #import "RCTEventDispatcher.h"
 #import "RCTUtils.h"
 #import <OpenTok/OpenTok.h>
@@ -74,7 +75,9 @@
         return;
     }
 
-   [self attachPublisherView];
+    [self attachPublisherView];
+
+    _publisher.videoCapture = [[OTKBasicVideoCapturer alloc] init];
 }
 
 - (void)pausePublish{
