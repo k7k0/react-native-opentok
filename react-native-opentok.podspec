@@ -20,6 +20,12 @@ Pod::Spec.new do |s|
 
   s.source_files  = "*.{h,m}"
 
+  s.pod_target_xcconfig = {
+    "MACH_O_TYPE": "staticlib",
+    "FRAMEWORK_SEARCH_PATHS": "${PODS_ROOT}/OpenTok"
+  }
+
   s.dependency "React"
-  s.dependency "OpenTok"
+  # This must be included in the root Podfile rather than here due to issues with use_frameworks.
+  # s.dependency "OpenTok"
 end
