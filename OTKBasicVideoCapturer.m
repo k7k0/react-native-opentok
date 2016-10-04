@@ -78,8 +78,8 @@
 
     [self.captureSession commitConfiguration];
 
-    self.format = [OTVideoFormat videoFormatNV12WithWidth:self.imageWidth
-                                                   height:self.imageHeight];
+    self.format = [OTVideoFormat videoFormatNV12WithWidth:480
+                                                   height:320];
 }
 
 - (void)releaseCapture
@@ -109,9 +109,10 @@
 
 - (int32_t)captureSettings:(OTVideoFormat*)videoFormat
 {
+     // @TODO: shouldnt we use self.format to copy the values from?
     videoFormat.pixelFormat = OTPixelFormatNV12;
-    videoFormat.imageWidth = self.imageWidth;
-    videoFormat.imageHeight = self.imageHeight;
+    videoFormat.imageWidth = 480; // self.imageWidth; -- this is wrong
+    videoFormat.imageHeight = 320; // self.imageHeight; -- this is wrong
 
     return 0;
 }
@@ -129,28 +130,47 @@
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
+
     if (!self.captureStarted)
         return;
+
+    int cropX0 = 0, cropY0 = 0, cropHeight = 320, cropWidth = 480;
 
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     OTVideoFrame *frame = [[OTVideoFrame alloc] initWithFormat:self.format];
 
     NSUInteger planeCount = CVPixelBufferGetPlaneCount(imageBuffer);
 
-    uint8_t *buffer = malloc(sizeof(uint8_t) * CVPixelBufferGetDataSize(imageBuffer));
+//    uint8_t *buffer = malloc(sizeof(uint8_t) * CVPixelBufferGetDataSize(imageBuffer));
+    uint8_t *buffer = malloc(sizeof(uint8_t) * cropWidth * cropHeight * 12 ); //12 = NVI, but take it from other place
     uint8_t *dst = buffer;
     uint8_t *planes[planeCount];
+    uint8_t *rowBaseAddress;
 
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     for (int i = 0; i < planeCount; i++) {
-        size_t planeSize = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, i) * CVPixelBufferGetHeightOfPlane(imageBuffer, i);
+        int inputBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, i);
+        int inputWidth = CVPixelBufferGetWidthOfPlane(imageBuffer, i);
+        int inputHeight = CVPixelBufferGetHeightOfPlane(imageBuffer, i);
+        int bytesPerPixel = inputBytesPerRow / inputWidth; // 8 or 4 I believe
 
+        // size_t planeSize = inputBytesPerRow * inputHeight;
+        // size_t outPlaneSize = bytesPerPixel * cropWidth * cropHeight;
+
+        int bytesToCopyPerRow = cropWidth * bytesPerPixel;
+
+        rowBaseAddress = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, i);
         planes[i] = dst;
-        dst += planeSize;
+        for (int row = 0; row < cropHeight; row++) { // for each row
 
-        memcpy(planes[i],
-                CVPixelBufferGetBaseAddressOfPlane(imageBuffer, i),
-                planeSize);
+            memcpy(dst,
+                   rowBaseAddress,
+                   bytesToCopyPerRow);
+
+            rowBaseAddress += inputBytesPerRow;
+            dst += bytesToCopyPerRow;
+        }
+
     }
 
     CMTime minFrameDuration = self.inputDevice.device.activeVideoMinFrameDuration;
