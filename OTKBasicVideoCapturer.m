@@ -8,6 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "OTKBasicVideoCapturer.h"
+#import <math.h>
 
 @interface OTKBasicVideoCapturer ()<AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (nonatomic, assign) BOOL captureStarted;
@@ -78,8 +79,8 @@
 
     [self.captureSession commitConfiguration];
 
-    self.format = [OTVideoFormat videoFormatNV12WithWidth:480
-                                                   height:320];
+    self.format = [OTVideoFormat videoFormatNV12WithWidth:320
+                                                   height:480];
 }
 
 - (void)releaseCapture
@@ -111,8 +112,8 @@
 {
      // @TODO: shouldnt we use self.format to copy the values from?
     videoFormat.pixelFormat = OTPixelFormatNV12;
-    videoFormat.imageWidth = 480; // self.imageWidth; -- this is wrong
-    videoFormat.imageHeight = 320; // self.imageHeight; -- this is wrong
+    videoFormat.imageWidth = 320; // self.imageWidth; -- this is wrong
+    videoFormat.imageHeight = 480; // self.imageHeight; -- this is wrong
 
     return 0;
 }
@@ -130,11 +131,10 @@
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
-
     if (!self.captureStarted)
         return;
 
-    int cropX0 = 0, cropY0 = 0, cropHeight = 320, cropWidth = 480;
+    int cropX0 = 0, cropY0 = 0, cropHeight = 480, cropWidth = 320;
 
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     OTVideoFrame *frame = [[OTVideoFrame alloc] initWithFormat:self.format];
@@ -149,6 +149,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     for (int i = 0; i < planeCount; i++) {
+        // Account for UV plane.
+        double uvReduction = pow(2, -i);
+        cropHeight = (int) (cropHeight * uvReduction);
+        cropWidth = (int) (cropWidth * uvReduction);
+        
         int inputBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, i);
         int inputWidth = CVPixelBufferGetWidthOfPlane(imageBuffer, i);
         int inputHeight = CVPixelBufferGetHeightOfPlane(imageBuffer, i);
