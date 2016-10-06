@@ -21,8 +21,8 @@ Pod::Spec.new do |s|
   s.source_files  = "*.{h,m}"
 
   s.pod_target_xcconfig = {
-    "MACH_O_TYPE": "staticlib",
-    "FRAMEWORK_SEARCH_PATHS": "${PODS_ROOT}/OpenTok"
+    "MACH_O_TYPE" => "staticlib",
+    "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/OpenTok"
   }
 
   s.dependency "React"
