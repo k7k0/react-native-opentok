@@ -16,8 +16,10 @@
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureDeviceInput *inputDevice;
 @property (nonatomic, strong) NSString *sessionPreset;
-@property (nonatomic, assign) NSUInteger imageWidth;
-@property (nonatomic, assign) NSUInteger imageHeight;
+@property (nonatomic, assign) NSUInteger inputWidth;
+@property (nonatomic, assign) NSUInteger inputHeight;
+@property (nonatomic, assign) NSUInteger outputWidth;
+@property (nonatomic, assign) NSUInteger outputHeight;
 @property (nonatomic, assign) NSUInteger desiredFrameRate;
 @property (nonatomic, strong) dispatch_queue_t captureQueue;
 
@@ -34,8 +36,10 @@
     if (self) {
         self.sessionPreset = preset;
         CGSize imageSize = [self sizeFromAVCapturePreset:self.sessionPreset];
-        _imageHeight = imageSize.height;
-        _imageWidth = imageSize.width;
+        _inputHeight = imageSize.height;
+        _inputWidth = imageSize.width;
+        _outputHeight = 480;
+        _outputWidth = 480;
         _desiredFrameRate = frameRate;
 
         _captureQueue = dispatch_queue_create("com.tokbox.OTKBasicVideoCapturer",DISPATCH_QUEUE_SERIAL);
@@ -79,8 +83,8 @@
 
     [self.captureSession commitConfiguration];
 
-    self.format = [OTVideoFormat videoFormatNV12WithWidth:320
-                                                   height:480];
+    self.format = [OTVideoFormat videoFormatNV12WithWidth: self.outputWidth
+                                                   height: self.outputHeight];
 }
 
 - (void)releaseCapture
@@ -110,11 +114,9 @@
 
 - (int32_t)captureSettings:(OTVideoFormat*)videoFormat
 {
-     // @TODO: shouldnt we use self.format to copy the values from?
     videoFormat.pixelFormat = OTPixelFormatNV12;
-    videoFormat.imageWidth = 320; // self.imageWidth; -- this is wrong
-    videoFormat.imageHeight = 480; // self.imageHeight; -- this is wrong
-
+    videoFormat.imageWidth = self.inputWidth;
+    videoFormat.imageHeight = self.inputHeight;
     return 0;
 }
 
@@ -124,7 +126,7 @@
   didDropSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
-    NSLog(@"Frame dropped");
+    //NSLog(@"Frame dropped");
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
@@ -134,7 +136,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if (!self.captureStarted)
         return;
 
-    int cropX0 = 0, cropY0 = 0, cropHeight = 480, cropWidth = 320;
+    int cropHeight = self.outputHeight, cropWidth = self.outputWidth;
 
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     OTVideoFrame *frame = [[OTVideoFrame alloc] initWithFormat:self.format];
@@ -142,7 +144,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     NSUInteger planeCount = CVPixelBufferGetPlaneCount(imageBuffer);
 
 //    uint8_t *buffer = malloc(sizeof(uint8_t) * CVPixelBufferGetDataSize(imageBuffer));
-    uint8_t *buffer = malloc(sizeof(uint8_t) * cropWidth * cropHeight * 12 ); //12 = NVI, but take it from other place
+    uint8_t *buffer = malloc(sizeof(uint8_t) * cropWidth * cropHeight * 1.5f ); //12 = NVI, but take it from other place
     uint8_t *dst = buffer;
     uint8_t *planes[planeCount];
     uint8_t *rowBaseAddress;
