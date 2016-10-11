@@ -83,8 +83,8 @@
 
     [self.captureSession commitConfiguration];
 
-    self.format = [OTVideoFormat videoFormatNV12WithWidth: self.outputWidth
-                                                   height: self.outputHeight];
+    self.format = [OTVideoFormat videoFormatNV12WithWidth: (int) self.outputWidth
+                                                   height: (int) self.outputHeight];
 }
 
 - (void)releaseCapture
@@ -115,8 +115,8 @@
 - (int32_t)captureSettings:(OTVideoFormat*)videoFormat
 {
     videoFormat.pixelFormat = OTPixelFormatNV12;
-    videoFormat.imageWidth = self.inputWidth;
-    videoFormat.imageHeight = self.inputHeight;
+    videoFormat.imageWidth = (int) self.inputWidth;
+    videoFormat.imageHeight = (int) self.inputHeight;
     return 0;
 }
 
@@ -136,7 +136,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if (!self.captureStarted)
         return;
 
-    int cropHeight = self.outputHeight, cropWidth = self.outputWidth;
+    int cropHeight = (int) self.outputHeight;
+    int cropWidth = (int) self.outputWidth;
 
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     OTVideoFrame *frame = [[OTVideoFrame alloc] initWithFormat:self.format];
@@ -156,9 +157,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
           cropWidth /= 2;
         }
         
-        int inputBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, i);
-        int inputWidth = CVPixelBufferGetWidthOfPlane(imageBuffer, i);
-        int inputHeight = CVPixelBufferGetHeightOfPlane(imageBuffer, i);
+        int inputBytesPerRow = (int) CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, i);
+        int inputWidth = (int) CVPixelBufferGetWidthOfPlane(imageBuffer, i);
         int bytesPerPixel = inputBytesPerRow / inputWidth; // 1 for Y, 2 for U/V
         int bytesToCopyPerRow = cropWidth * bytesPerPixel;
 
@@ -183,7 +183,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
     CMTime time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     frame.timestamp = time;
-    [frame setPlanesWithPointers:planes numPlanes:planeCount];
+    [frame setPlanesWithPointers:planes numPlanes: (int) planeCount];
 
     [self.videoCaptureConsumer consumeFrame:frame];
 
