@@ -20,6 +20,7 @@
 @implementation RCTOpenTokPublisherView {
     OTSession *_session;
     OTPublisher *_publisher;
+    BOOL _isMounted;
 }
 
 /**
@@ -27,8 +28,11 @@
  */
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
-    [self mount];
+    if (!_isMounted) {
+      [self mount];
+    }
 }
+
 
 /**
  * Creates a new session with a given apiKey, sessionID and token
@@ -45,6 +49,8 @@
 
     if (error) {
         _onPublishError(RCTJSErrorFromNSError(error));
+    } else {
+      _isMounted = YES;
     }
 }
 
@@ -201,12 +207,12 @@
     [self cleanupPublisher];
 }
 
-/**
- * Remove session when this component is unmounted
- */
-- (void)dealloc {
-    [self cleanupPublisher];
-    [_session disconnect:nil];
+
+- (void)removeFromSuperview {
+  _isMounted = NO;
+  [self cleanupPublisher];
+  [_session disconnect:nil];
+  [super removeFromSuperview];
 }
 
 @end
