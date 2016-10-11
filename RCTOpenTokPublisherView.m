@@ -83,8 +83,22 @@
 
     [self attachPublisherView];
 
-    _publisher.videoCapture = [[OTKBasicVideoCapturer alloc] initWithPreset:AVCaptureSessionPreset640x480 // @TODO: Change!
-                                                            andDesiredFrameRate:_cameraFrameRate];
+    _publisher.videoCapture = [[OTKBasicVideoCapturer alloc]
+                                  initWithPreset: [self getCapturePreset:_cameraResolution]
+                                  andDesiredFrameRate:_cameraFrameRate];
+}
+
+- (NSString *) getCapturePreset:(NSInteger) resolution
+{
+  if (resolution == OTCameraCaptureResolutionLow) {
+    return AVCaptureSessionPreset352x288;
+  } else if (resolution == OTCameraCaptureResolutionMedium) {
+    return AVCaptureSessionPreset640x480;
+  } else if (resolution == OTCameraCaptureResolutionHigh) {
+    return AVCaptureSessionPreset1280x720;
+  }
+  [NSException raise:@"Invalid camera resolution value" format:@" %ld is invalid", (long)resolution];
+  return @"";
 }
 
 - (void)pausePublish{

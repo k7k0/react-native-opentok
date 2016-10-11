@@ -38,8 +38,8 @@
         CGSize imageSize = [self sizeFromAVCapturePreset:self.sessionPreset];
         _inputHeight = imageSize.height;
         _inputWidth = imageSize.width;
-        _outputHeight = 480;
-        _outputWidth = 480;
+        _outputHeight = _inputHeight < _inputWidth ? _inputHeight : _inputWidth;  //pick the smaller axis
+        _outputWidth = _outputHeight; //Should be square
         _desiredFrameRate = frameRate;
 
         _captureQueue = dispatch_queue_create("com.tokbox.OTKBasicVideoCapturer",DISPATCH_QUEUE_SERIAL);
@@ -158,8 +158,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
         
         int inputBytesPerRow = (int) CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, i);
-        int inputWidth = (int) CVPixelBufferGetWidthOfPlane(imageBuffer, i);
-        int bytesPerPixel = inputBytesPerRow / inputWidth; // 1 for Y, 2 for U/V
+        int inputPixelWidth = (int) CVPixelBufferGetWidthOfPlane(imageBuffer, i);
+        int bytesPerPixel = inputBytesPerRow / inputPixelWidth; // 1 for Y, 2 for U/V
         int bytesToCopyPerRow = cropWidth * bytesPerPixel;
 
         rowBaseAddress = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, i);
