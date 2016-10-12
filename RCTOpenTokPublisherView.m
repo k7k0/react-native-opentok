@@ -102,18 +102,13 @@
 }
 
 - (void)pausePublish{
-    NSLog(@"pausePublish");
     OTError* error = nil;
     [_session unpublish:_publisher error:&error];
     if (error) {
         NSLog(@"publishing failed with error: (%@)", error);
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self cleanupPublisher];
-    });
 }
 - (void)resumePublish{
-    NSLog(@"resumePublish");
     // for web we could preserve the publisher, but it doesnt seem to work here.
     // So we need to recreate the publisher
     dispatch_async(dispatch_get_main_queue(), ^{
