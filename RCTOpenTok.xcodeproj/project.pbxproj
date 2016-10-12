@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AD8A566F1D3FAF5F00683126 /* RCTOpenTok.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8A566E1D3FAF5F00683126 /* RCTOpenTok.m */; };
+		2468D5F91DAEA17200346ECF /* OTDefaultAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5E81DAEA17200346ECF /* OTDefaultAudioDevice.m */; };
+		2468D5FA1DAEA17200346ECF /* OTKBasicVideoCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5EA1DAEA17200346ECF /* OTKBasicVideoCapturer.m */; };
+		2468D5FB1DAEA17200346ECF /* OTNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5EC1DAEA17200346ECF /* OTNetworkTest.m */; };
+		2468D5FC1DAEA17200346ECF /* RCTOpenTokNetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5EE1DAEA17200346ECF /* RCTOpenTokNetworkTest.m */; };
+		2468D5FD1DAEA17200346ECF /* RCTOpenTokPublisherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5F01DAEA17200346ECF /* RCTOpenTokPublisherView.m */; };
+		2468D5FE1DAEA17200346ECF /* RCTOpenTokPublisherViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5F21DAEA17200346ECF /* RCTOpenTokPublisherViewManager.m */; };
+		2468D5FF1DAEA17200346ECF /* RCTOpenTokSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5F41DAEA17200346ECF /* RCTOpenTokSessionManager.m */; };
+		2468D6001DAEA17200346ECF /* RCTOpenTokSubscriberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5F61DAEA17200346ECF /* RCTOpenTokSubscriberView.m */; };
+		2468D6011DAEA17200346ECF /* RCTOpenTokSubscriberViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2468D5F81DAEA17200346ECF /* RCTOpenTokSubscriberViewManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,9 +31,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2468D5E71DAEA17200346ECF /* OTDefaultAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTDefaultAudioDevice.h; sourceTree = "<group>"; };
+		2468D5E81DAEA17200346ECF /* OTDefaultAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTDefaultAudioDevice.m; sourceTree = "<group>"; };
+		2468D5E91DAEA17200346ECF /* OTKBasicVideoCapturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTKBasicVideoCapturer.h; sourceTree = "<group>"; };
+		2468D5EA1DAEA17200346ECF /* OTKBasicVideoCapturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTKBasicVideoCapturer.m; sourceTree = "<group>"; };
+		2468D5EB1DAEA17200346ECF /* OTNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTNetworkTest.h; sourceTree = "<group>"; };
+		2468D5EC1DAEA17200346ECF /* OTNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTNetworkTest.m; sourceTree = "<group>"; };
+		2468D5ED1DAEA17200346ECF /* RCTOpenTokNetworkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokNetworkTest.h; sourceTree = "<group>"; };
+		2468D5EE1DAEA17200346ECF /* RCTOpenTokNetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokNetworkTest.m; sourceTree = "<group>"; };
+		2468D5EF1DAEA17200346ECF /* RCTOpenTokPublisherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokPublisherView.h; sourceTree = "<group>"; };
+		2468D5F01DAEA17200346ECF /* RCTOpenTokPublisherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokPublisherView.m; sourceTree = "<group>"; };
+		2468D5F11DAEA17200346ECF /* RCTOpenTokPublisherViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokPublisherViewManager.h; sourceTree = "<group>"; };
+		2468D5F21DAEA17200346ECF /* RCTOpenTokPublisherViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokPublisherViewManager.m; sourceTree = "<group>"; };
+		2468D5F31DAEA17200346ECF /* RCTOpenTokSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokSessionManager.h; sourceTree = "<group>"; };
+		2468D5F41DAEA17200346ECF /* RCTOpenTokSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokSessionManager.m; sourceTree = "<group>"; };
+		2468D5F51DAEA17200346ECF /* RCTOpenTokSubscriberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokSubscriberView.h; sourceTree = "<group>"; };
+		2468D5F61DAEA17200346ECF /* RCTOpenTokSubscriberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokSubscriberView.m; sourceTree = "<group>"; };
+		2468D5F71DAEA17200346ECF /* RCTOpenTokSubscriberViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokSubscriberViewManager.h; sourceTree = "<group>"; };
+		2468D5F81DAEA17200346ECF /* RCTOpenTokSubscriberViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokSubscriberViewManager.m; sourceTree = "<group>"; };
 		AD8A56611D3FAF1400683126 /* libRCTOpenTok.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTOpenTok.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD8A566D1D3FAF5F00683126 /* RCTOpenTok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTok.h; sourceTree = "<group>"; };
-		AD8A566E1D3FAF5F00683126 /* RCTOpenTok.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTok.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,8 +66,24 @@
 		AD8A56581D3FAF1400683126 = {
 			isa = PBXGroup;
 			children = (
-				AD8A566D1D3FAF5F00683126 /* RCTOpenTok.h */,
-				AD8A566E1D3FAF5F00683126 /* RCTOpenTok.m */,
+				2468D5E71DAEA17200346ECF /* OTDefaultAudioDevice.h */,
+				2468D5E81DAEA17200346ECF /* OTDefaultAudioDevice.m */,
+				2468D5E91DAEA17200346ECF /* OTKBasicVideoCapturer.h */,
+				2468D5EA1DAEA17200346ECF /* OTKBasicVideoCapturer.m */,
+				2468D5EB1DAEA17200346ECF /* OTNetworkTest.h */,
+				2468D5EC1DAEA17200346ECF /* OTNetworkTest.m */,
+				2468D5ED1DAEA17200346ECF /* RCTOpenTokNetworkTest.h */,
+				2468D5EE1DAEA17200346ECF /* RCTOpenTokNetworkTest.m */,
+				2468D5EF1DAEA17200346ECF /* RCTOpenTokPublisherView.h */,
+				2468D5F01DAEA17200346ECF /* RCTOpenTokPublisherView.m */,
+				2468D5F11DAEA17200346ECF /* RCTOpenTokPublisherViewManager.h */,
+				2468D5F21DAEA17200346ECF /* RCTOpenTokPublisherViewManager.m */,
+				2468D5F31DAEA17200346ECF /* RCTOpenTokSessionManager.h */,
+				2468D5F41DAEA17200346ECF /* RCTOpenTokSessionManager.m */,
+				2468D5F51DAEA17200346ECF /* RCTOpenTokSubscriberView.h */,
+				2468D5F61DAEA17200346ECF /* RCTOpenTokSubscriberView.m */,
+				2468D5F71DAEA17200346ECF /* RCTOpenTokSubscriberViewManager.h */,
+				2468D5F81DAEA17200346ECF /* RCTOpenTokSubscriberViewManager.m */,
 				AD8A56621D3FAF1400683126 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,7 +152,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8A566F1D3FAF5F00683126 /* RCTOpenTok.m in Sources */,
+				2468D5FD1DAEA17200346ECF /* RCTOpenTokPublisherView.m in Sources */,
+				2468D5F91DAEA17200346ECF /* OTDefaultAudioDevice.m in Sources */,
+				2468D5FC1DAEA17200346ECF /* RCTOpenTokNetworkTest.m in Sources */,
+				2468D5FB1DAEA17200346ECF /* OTNetworkTest.m in Sources */,
+				2468D5FF1DAEA17200346ECF /* RCTOpenTokSessionManager.m in Sources */,
+				2468D6001DAEA17200346ECF /* RCTOpenTokSubscriberView.m in Sources */,
+				2468D6011DAEA17200346ECF /* RCTOpenTokSubscriberViewManager.m in Sources */,
+				2468D5FE1DAEA17200346ECF /* RCTOpenTokPublisherViewManager.m in Sources */,
+				2468D5FA1DAEA17200346ECF /* OTKBasicVideoCapturer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +252,11 @@
 		AD8A566B1D3FAF1400683126 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../ios/Pods/Opentok/**";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../react-native/React/**",
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -213,6 +266,11 @@
 		AD8A566C1D3FAF1400683126 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../ios/Pods/Opentok/**";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../react-native/React/**",
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
