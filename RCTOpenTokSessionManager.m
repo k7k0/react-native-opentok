@@ -27,8 +27,6 @@ RCT_EXPORT_METHOD(connect:(NSString *)apiKey sessionId:(NSString *)sessionId tok
 
   if (error) {
     NSLog(@"connect failed with error: (%@)", error);
-  } else {
-    NSLog(@"session created");
   }
 }
 
