@@ -59,6 +59,7 @@ RCT_EXPORT_VIEW_PROPERTY(onSessionDidConnect, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onSessionDidDisconnect, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onArchiveStarted, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onArchiveStopped, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onThumbnailReady, RCTDirectEventBlock)
 
 
 RCT_EXPORT_METHOD(resumePublish)

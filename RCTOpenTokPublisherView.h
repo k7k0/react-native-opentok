@@ -34,6 +34,7 @@
 
 @property (nonatomic, copy) RCTDirectEventBlock onArchiveStarted;
 @property (nonatomic, copy) RCTDirectEventBlock onArchiveStopped;
+@property (nonatomic, copy) RCTDirectEventBlock onThumbnailReady;
 
 
 @end
