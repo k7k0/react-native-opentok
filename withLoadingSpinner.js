@@ -21,9 +21,9 @@ const withLoadingSpinner = (Component, callbackName) => class SpinnerView extend
   };
 
   state = {
-    renderSpinner: true,
+    renderSpinner: false,
   };
-	
+
   getRef() {
 	  return this.refs[childRef];
   }
@@ -61,9 +61,10 @@ const withLoadingSpinner = (Component, callbackName) => class SpinnerView extend
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+	backgroundColor: '#000000',
   },
   spinnerContainer: {
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#000000',
     flex: 1,
     position: 'absolute',
     top: 0,

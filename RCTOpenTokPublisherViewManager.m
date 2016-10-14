@@ -69,7 +69,9 @@ RCT_EXPORT_METHOD(resumePublish)
 }
 RCT_EXPORT_METHOD(pausePublish)
 {
-    [_recorderView pausePublish];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2f * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [_recorderView pausePublish];
+    });
 }
 
 @end
