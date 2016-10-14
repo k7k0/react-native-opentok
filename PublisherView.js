@@ -126,6 +126,10 @@ class PublisherView extends React.Component {
      * ```
      */
     onThumbnailReady: React.PropTypes.func,
+    /**
+     * Enable video 
+     */
+    videoEnabled: React.PropTypes.bool,
   };
 
 

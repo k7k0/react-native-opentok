@@ -67,9 +67,8 @@
                                       cameraResolution: _cameraResolution
                                        cameraFrameRate: _cameraFrameRate];
 
-    // we'll need some of this for audio only scenarios - whitelisting config
    _publisher.publishAudio = YES;
-   _publisher.publishVideo = YES;
+   _publisher.publishVideo = _videoEnabled;
    _publisher.audioFallbackEnabled = YES;
 
     OTError *error = nil;
@@ -147,10 +146,13 @@
     
     [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
     
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *originalImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    UIImage *image = [[UIImage alloc] initWithCGImage: originalImage.CGImage
+                                                        scale: originalImage.scale
+                                                        orientation: UIImageOrientationUpMirrored];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"OpentokLastThumbnail.png"];
     [UIImageJPEGRepresentation(image, 1.0) writeToFile:filePath atomically:YES];
     

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *token;
 @property (nonatomic, assign) NSInteger cameraResolution;
 @property (nonatomic, assign) NSInteger cameraFrameRate;
+@property (nonatomic, assign) BOOL videoEnabled;
 
 - (void)pausePublish;
 
