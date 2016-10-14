@@ -115,7 +115,22 @@ class PublisherView extends React.Component {
      * ```
      */
     onArchiveStopped: React.PropTypes.func,
-};
+    /**
+     * This function is called when it succesfully takes a thumbnail 
+     *
+     * Receives payload:
+     * ```
+     * {
+     *   filePath: string,
+     * }
+     * ```
+     */
+    onThumbnailReady: React.PropTypes.func,
+    /**
+     * Enable video 
+     */
+    videoEnabled: React.PropTypes.bool,
+  };
 
 
   static defaultProps = {
@@ -128,6 +143,7 @@ class PublisherView extends React.Component {
     onSessionDidDisconnect: noop,
     onArchiveStarted: noop,
     onArchiveStopped: noop,
+	onThumbnailReady: noop,
   };
 
   pausePublish() {

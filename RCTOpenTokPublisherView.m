@@ -67,9 +67,8 @@
                                       cameraResolution: _cameraResolution
                                        cameraFrameRate: _cameraFrameRate];
 
-    // we'll need some of this for audio only scenarios - whitelisting config
    _publisher.publishAudio = YES;
-   _publisher.publishVideo = YES;
+   _publisher.publishVideo = _videoEnabled;
    _publisher.audioFallbackEnabled = YES;
 
     OTError *error = nil;
@@ -132,6 +131,38 @@
     _publisher = nil;
 }
 
+- (void) saveThumbnail {
+    [self screenShotImageWithView:_publisher.view];
+}
+
+- (UIView *) screenShotViewWithView:(UIView *)view
+{
+    return  [view snapshotViewAfterScreenUpdates:YES];
+}
+
+- (void) screenShotImageWithView :(UIView *) view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);
+    
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    
+    UIImage *originalImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImage *image = [[UIImage alloc] initWithCGImage: originalImage.CGImage
+                                                        scale: originalImage.scale
+                                                        orientation: UIImageOrientationUpMirrored];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"OpentokLastThumbnail.png"];
+    [UIImageJPEGRepresentation(image, 1.0) writeToFile:filePath atomically:YES];
+    
+    _onThumbnailReady(@{
+                        @"filePath": filePath,
+                        });
+}
+
+
+
 #pragma mark - OTSession delegate callbacks
 
 /**
@@ -188,6 +219,8 @@
 
 #pragma mark - OTSession delegate - archive callbacks
 - (void)session:(OTSession *)session archiveStartedWithId:(NSString *)archiveId name:(NSString *)name {
+    [self saveThumbnail];
+    
     _onArchiveStarted(@{
         @"archiveId": archiveId,
         @"name": name,

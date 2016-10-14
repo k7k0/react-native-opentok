@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *token;
 @property (nonatomic, assign) NSInteger cameraResolution;
 @property (nonatomic, assign) NSInteger cameraFrameRate;
+@property (nonatomic, assign) BOOL videoEnabled;
 
 - (void)pausePublish;
 
@@ -34,6 +35,7 @@
 
 @property (nonatomic, copy) RCTDirectEventBlock onArchiveStarted;
 @property (nonatomic, copy) RCTDirectEventBlock onArchiveStopped;
+@property (nonatomic, copy) RCTDirectEventBlock onThumbnailReady;
 
 
 @end
