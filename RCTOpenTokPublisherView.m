@@ -21,6 +21,7 @@
     OTSession *_session;
     OTPublisher *_publisher;
     BOOL _isMounted;
+    BOOL _isPaused;
 }
 
 /**
@@ -42,6 +43,7 @@
  * Otherwise, `onSessionCreated` callback is called asynchronously
  */
 - (void)mount {
+    _isPaused = NO;
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
 
     OTError *error = nil;
@@ -101,6 +103,7 @@
 }
 
 - (void)pausePublish{
+    _isPaused = YES;
     OTError* error = nil;
     [_session unpublish:_publisher error:&error];
     if (error) {
@@ -108,6 +111,7 @@
     }
 }
 - (void)resumePublish{
+    _isPaused = NO;
     // for web we could preserve the publisher, but it doesnt seem to work here.
     // So we need to recreate the publisher
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -127,8 +131,10 @@
  * Cleans up publisher
  */
 - (void)cleanupPublisher {
-    [_publisher.view removeFromSuperview];
-    _publisher = nil;
+    if (! _isPaused) {
+        [_publisher.view removeFromSuperview];
+        _publisher = nil;
+    }
 }
 
 - (void) saveThumbnail {
