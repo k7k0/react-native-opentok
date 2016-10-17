@@ -116,7 +116,7 @@ class PublisherView extends React.Component {
      */
     onArchiveStopped: React.PropTypes.func,
     /**
-     * This function is called when it succesfully takes a thumbnail 
+     * This function is called when it succesfully takes a thumbnail
      *
      * Receives payload:
      * ```
@@ -127,7 +127,7 @@ class PublisherView extends React.Component {
      */
     onThumbnailReady: React.PropTypes.func,
     /**
-     * Enable video 
+     * Enable video
      */
     videoEnabled: React.PropTypes.bool,
   };
@@ -152,7 +152,9 @@ class PublisherView extends React.Component {
   resumePublish() {
     OpenTokPublisherViewManager.resumePublish();
   }
-
+  stopPublish() {
+    OpenTokPublisherViewManager.stopPublish();
+  }
   render() {
     return <RCTPublisherView {...this.props} />;
   }

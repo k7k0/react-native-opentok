@@ -20,8 +20,8 @@
 @property (nonatomic, assign) BOOL videoEnabled;
 
 - (void)pausePublish;
-
 - (void)resumePublish;
+- (void)stopPublish;
 
 @property (nonatomic, copy) RCTDirectEventBlock onPublishError;
 @property (nonatomic, copy) RCTDirectEventBlock onPublishStop;
