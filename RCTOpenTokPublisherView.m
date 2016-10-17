@@ -20,17 +20,18 @@
 @implementation RCTOpenTokPublisherView {
     OTSession *_session;
     OTPublisher *_publisher;
-    BOOL _isMounted;
+    BOOL _isSessionCreated;
     BOOL _isPaused;
+    BOOL _isPublished;
 }
 
 /**
- * Mounts component after all props were passed
+ * Create session after all props were passed
  */
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
-    if (!_isMounted) {
-      [self mount];
+    if (!_isSessionCreated) {
+      [self createSession];
     }
 }
 
@@ -42,7 +43,7 @@
  *
  * Otherwise, `onSessionCreated` callback is called asynchronously
  */
-- (void)mount {
+- (void) createSession {
     _isPaused = NO;
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
 
@@ -52,7 +53,7 @@
     if (error) {
         _onPublishError(RCTJSErrorFromNSError(error));
     } else {
-      _isMounted = YES;
+      _isSessionCreated = YES;
     }
 }
 
@@ -107,7 +108,7 @@
     OTError* error = nil;
     [_session unpublish:_publisher error:&error];
     if (error) {
-        NSLog(@"publishing failed with error: (%@)", error);
+        NSLog(@"pausePublish with error: (%@)", error);
     }
 }
 - (void)resumePublish{
@@ -118,6 +119,18 @@
         [self startPublishing];
     });
 }
+
+- (void)stopPublish{
+    _isPaused = NO;
+    if (_isPublished) {
+        OTError* error = nil;
+        [_session unpublish:_publisher error:&error];
+        if (error) {
+            NSLog(@"stopPublish failed with error: (%@)", error);
+        }
+    }
+}
+
 
 /**
  * Attaches publisher preview
@@ -242,22 +255,25 @@
 #pragma mark - OTPublisher delegate callbacks
 
 - (void)publisher:(OTPublisherKit*)publisher streamCreated:(OTStream *)stream {
+    _isPublished = YES;
     _onPublishStart(@{});
 }
 
 - (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream {
+    _isPublished = NO;
     _onPublishStop(@{});
     [self cleanupPublisher];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*)error {
+    _isPublished = NO;
     _onPublishError(RCTJSErrorFromNSError(error));
     [self cleanupPublisher];
 }
 
 
 - (void)removeFromSuperview {
-  _isMounted = NO;
+  _isSessionCreated = NO;
   [self cleanupPublisher];
   [_session disconnect:nil];
   [super removeFromSuperview];

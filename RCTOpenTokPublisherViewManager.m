@@ -73,5 +73,9 @@ RCT_EXPORT_METHOD(pausePublish)
         [_recorderView pausePublish];
     });
 }
+RCT_EXPORT_METHOD(stopPublish)
+{
+    [_recorderView stopPublish];
+}
 
 @end
